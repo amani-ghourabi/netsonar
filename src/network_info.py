@@ -1,14 +1,19 @@
 import ipaddress
 import sys
 
+
+def get_network(ip, mask):
+    try:
+        return ipaddress.IPv4Network(f"{ip}/{mask}", strict=False)
+    except ValueError:
+        print("Error: invalid IP address or subnet mask.")
+        sys.exit(1)
+
+
 ip = input("Enter your IPv4 address: ")
 mask = input("Enter your subnet mask: ")
 
-try:
-    network = ipaddress.IPv4Network(f"{ip}/{mask}", strict=False)
-except ValueError:
-    print("Error: invalid IP address or subnet mask.")
-    sys.exit(1)
+network = get_network(ip, mask)
 
 print("Network:", network.network_address)
 print("Subnet mask:", network.netmask)
