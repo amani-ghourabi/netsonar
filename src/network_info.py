@@ -31,7 +31,7 @@ def show_info(network):
 
 
 ip = input("Enter your IPv4 address: ")
-mask = input("Enter your subnet mask: ")
+mask = input("Enter your subnet mask (e.g. 255.255.255.0 or /24): ").strip().lstrip("/")
 
 network = get_network(ip, mask)
 show_info(network)
