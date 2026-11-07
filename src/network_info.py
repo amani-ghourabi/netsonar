@@ -1,16 +1,19 @@
 import ipaddress
+import sys
 
 ip = input("Enter your IPv4 address: ")
 mask = input("Enter your subnet mask: ")
 
-network = ipaddress.IPv4Network(
-    f"{ip}/{mask}", strict=False
-)
+try:
+    network = ipaddress.IPv4Network(f"{ip}/{mask}", strict=False)
+except ValueError:
+    print("Error: invalid IP address or subnet mask.")
+    sys.exit(1)
 
 print("Network:", network.network_address)
-print("Subnet:", network.netmask)
+print("Subnet mask:", network.netmask)
 print("Broadcast:", network.broadcast_address)
-print("Number of hosts:", network.num_addresses - 2)
+print("Usable hosts:", network.num_addresses - 2)
 
 print("\nUsable IP addresses:")
 
