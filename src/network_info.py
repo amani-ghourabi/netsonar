@@ -10,17 +10,19 @@ def get_network(ip, mask):
         sys.exit(1)
 
 
+def show_info(network):
+    print("Network:", network.network_address)
+    print("Subnet mask:", network.netmask)
+    print("Broadcast:", network.broadcast_address)
+    print("Usable hosts:", network.num_addresses - 2)
+
+    print("\nUsable IP addresses:")
+    for address in network.hosts():
+        print(address)
+
+
 ip = input("Enter your IPv4 address: ")
 mask = input("Enter your subnet mask: ")
 
 network = get_network(ip, mask)
-
-print("Network:", network.network_address)
-print("Subnet mask:", network.netmask)
-print("Broadcast:", network.broadcast_address)
-print("Usable hosts:", network.num_addresses - 2)
-
-print("\nUsable IP addresses:")
-
-for address in network.hosts():
-    print(address)
+show_info(network)
