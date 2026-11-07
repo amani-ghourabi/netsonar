@@ -4,12 +4,12 @@ A simple Python project that analyzes an IPv4 address and its subnet mask to cal
 
 ## Features
 
-- Accepts an IPv4 address and subnet mask.
-- Calculates the network address.
-- Identifies the subnet mask.
-- Calculates the broadcast address.
-- Displays the number of usable host addresses.
-- Lists all usable IP addresses.
+- Accepts an IPv4 address and a subnet mask (`255.255.255.0`, `/24` or `24`).
+- Validates input and shows a clear error message.
+- Calculates the network address and broadcast address.
+- Displays the number of usable hosts.
+- Lists the first 10 usable IP addresses (and how many more exist).
+- Handles `/31` and `/32` networks correctly.
 
 ## Technologies Used
 
@@ -19,13 +19,12 @@ A simple Python project that analyzes an IPv4 address and its subnet mask to cal
 ## Project Structure
 
 ```text
-python-network-scanner/
-│
+technical-projects/
+├── .gitignore
 ├── README.md
 └── src/
     └── network_info.py
 ```
-
 ## Requirements
 
 - Python 3.x
@@ -51,28 +50,40 @@ cd technical-projects
 python src/network_info.py
 ```
 
+On Linux/macOS, use `python3 src/network_info.py` instead.
+
+## Example
+
 ## Example
 
 **Input:**
 
 ```text
 Enter your IPv4 address: 192.168.1.10
-Enter your subnet mask: 255.255.255.0
+Enter your subnet mask (e.g. 255.255.255.0 or /24): 255.255.255.0
 ```
 
 **Output:**
 
 ```text
 Network: 192.168.1.0
-Subnet: 255.255.255.0
+Subnet mask: 255.255.255.0
 Broadcast: 192.168.1.255
-Number of hosts: 254
+Usable hosts: 254
 
-Usable IP addresses:
+Usable IP addresses (first 10):
 192.168.1.1
 192.168.1.2
 ...
-192.168.1.254
+192.168.1.10
+... and 244 more
+```
+**Invalid input:**
+
+```text
+Enter your IPv4 address: 192.168.1.1.10
+Enter your subnet mask (e.g. 255.255.255.0 or /24): /24
+Error: invalid IP address or subnet mask.
 ```
 
 ## Learning Objectives
