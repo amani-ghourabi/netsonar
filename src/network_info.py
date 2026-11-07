@@ -14,11 +14,20 @@ def show_info(network):
     print("Network:", network.network_address)
     print("Subnet mask:", network.netmask)
     print("Broadcast:", network.broadcast_address)
-    print("Usable hosts:", network.num_addresses - 2)
 
-    print("\nUsable IP addresses:")
+    total = network.num_addresses - 2
+    print("Usable hosts:", total)
+
+    print("\nUsable IP addresses (first 10):")
+    count = 0
     for address in network.hosts():
+        if count == 10:
+            break
         print(address)
+        count = count + 1
+
+    if total > 10:
+        print(f"... and {total - 10} more")
 
 
 ip = input("Enter your IPv4 address: ")
