@@ -54,8 +54,6 @@ On Linux/macOS, use `python3 src/network_info.py` instead.
 
 ## Example
 
-## Example
-
 **Input:**
 
 ```text
