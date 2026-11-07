@@ -1,5 +1,8 @@
+import ipaddress
 import platform
 import subprocess
+import sys
+from concurrent.futures import ThreadPoolExecutor
 
 
 def is_host_alive(ip):
@@ -12,9 +15,30 @@ def is_host_alive(ip):
     return "TTL" in result.stdout.upper()
 
 
-ip = input("Enter an IP address to check: ").strip()
+def scan_network(network):
+    hosts = list(network.hosts())
 
-if is_host_alive(ip):
-    print(ip, "is online")
-else:
-    print(ip, "is offline")
+    with ThreadPoolExecutor(max_workers=50) as executor:
+        results = list(executor.map(is_host_alive, hosts))
+
+    return [str(host) for host, alive in zip(hosts, results) if alive]
+
+
+cidr = input("Enter the network to scan (e.g. 192.168.0.0/24): ").strip()
+
+try:
+    network = ipaddress.IPv4Network(cidr, strict=False)
+except ValueError:
+    print("Error: invalid network.")
+    sys.exit(1)
+
+if network.num_addresses > 256:
+    print("Network too large. Use /24 or smaller.")
+    sys.exit(1)
+
+print(f"Scanning {network} ...")
+online = scan_network(network)
+
+print(f"\n{len(online)} device(s) online:")
+for ip in online:
+    print(ip)
