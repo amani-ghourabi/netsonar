@@ -15,7 +15,10 @@ def show_info(network):
     print("Subnet mask:", network.netmask)
     print("Broadcast:", network.broadcast_address)
 
-    total = network.num_addresses - 2
+    if network.prefixlen >= 31:
+        total = network.num_addresses
+    else:
+        total = network.num_addresses - 2
     print("Usable hosts:", total)
 
     print("\nUsable IP addresses (first 10):")
