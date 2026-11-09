@@ -1,8 +1,17 @@
+import socket
+
 from flask import Flask, jsonify, request, send_from_directory
 
 from src.scanner import scan_cidr
 
 app = Flask(__name__)
+
+
+def local_ips():
+    try:
+        return socket.gethostbyname_ex(socket.gethostname())[2]
+    except OSError:
+        return []
 
 
 @app.route("/")
@@ -17,7 +26,7 @@ def api_scan():
         devices = scan_cidr(network)
     except ValueError as error:
         return jsonify({"error": str(error)}), 400
-    return jsonify({"network": network, "devices": devices})
+    return jsonify({"network": network, "devices": devices, "me": local_ips()})
 
 
 if __name__ == "__main__":
