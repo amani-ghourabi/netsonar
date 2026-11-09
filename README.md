@@ -38,7 +38,7 @@ A Python project that started as an IPv4 subnet calculator and grew into a netwo
 ## Project Structure
 
 ```text
-technical-projects/
+netsonar/
 ├── app.py
 ├── requirements.txt
 ├── README.md
@@ -52,8 +52,8 @@ technical-projects/
 ## Installation
 
 ```bash
-git clone https://github.com/amani-ghourabi/technical-projects.git
-cd technical-projects
+git clone https://github.com/amani-ghourabi/netsonar.git
+cd netsonar
 pip install -r requirements.txt
 ```
 
