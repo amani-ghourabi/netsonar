@@ -66,10 +66,11 @@ python src/network_info.py
 ## Example
 
 ```text
-$ netsonar scan 172.20.10.0/28
-172.20.10.3 online  This computer
-172.20.10.1 online  Router (gateway)
-done 2 devices online out of 14 addresses.
+$ netsonar scan 192.168.0.0/24
+192.168.0.5  online  This computer
+192.168.0.1  online  Router (gateway)
+192.168.0.12 online  Device 12
+done 3 devices online out of 254 addresses.
 ```
 
 ## Responsible Use
