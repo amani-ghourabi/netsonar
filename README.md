@@ -2,6 +2,16 @@
 
 A Python project that started as an IPv4 subnet calculator and grew into a network scanner with a live web dashboard.
 
+## Screenshots
+
+![Entrance screen](screenshots/NetSonar.PNG)
+
+![Home](screenshots/home.PNG)
+
+![Scan](screenshots/scan.PNG)
+
+![Devices](screenshots/devices.PNG)
+
 ## Features
 
 **Dashboard**
