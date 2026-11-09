@@ -1,99 +1,89 @@
-# IPv4 Network Information Tool
+# NetSonar: Network Scanner and Dashboard
 
-A simple Python project that analyzes an IPv4 address and its subnet mask to calculate essential network information.
+A Python project that started as an IPv4 subnet calculator and grew into a network scanner with a live web dashboard.
 
 ## Features
 
-- Accepts an IPv4 address and a subnet mask (`255.255.255.0`, `/24` or `24`).
-- Validates input and shows a clear error message.
-- Calculates the network address and broadcast address.
-- Displays the number of usable hosts.
-- Lists the first 10 usable IP addresses (and how many more exist).
-- Handles `/31` and `/32` networks correctly.
+**Dashboard**
+- Animated entrance screen and a radar view that shows devices as they are found.
+- Scan page with progress bar, address grid and live log.
+- Devices page listing everything the last scan found.
+
+**Scanner**
+- Discovers online devices on a local subnet using threaded pings.
+- Accepts private networks only, up to `/24`.
+
+**IPv4 calculator** (`src/network_info.py`)
+- Accepts an IPv4 address and a mask (`255.255.255.0`, `/24` or `24`).
+- Calculates network address, broadcast address and usable hosts.
+- Validates input and handles `/31` and `/32` networks.
 
 ## Technologies Used
 
-- **Language:** Python 3
-- **Module:** `ipaddress` (Python standard library)
+- Python 3
+- Flask (web server)
+- `ipaddress`, `subprocess`, `socket` (standard library)
+- HTML, CSS and JavaScript (dashboard)
 
 ## Project Structure
 
 ```text
 technical-projects/
-├── .gitignore
+├── app.py
+├── requirements.txt
 ├── README.md
-└── src/
-    └── network_info.py
+├── src/
+│   ├── network_info.py
+│   └── scanner.py
+└── static/
+    └── index.html
 ```
-## Requirements
 
-- Python 3.x
-- No external libraries required.
-
-## How to Run
-
-1. Clone the repository:
+## Installation
 
 ```bash
 git clone https://github.com/amani-ghourabi/technical-projects.git
+cd technical-projects
+pip install -r requirements.txt
 ```
 
-2. Navigate to the project directory:
+## Usage
+
+**Dashboard**
 
 ```bash
-cd technical-projects
+python app.py
 ```
 
-3. Run the Python script:
+Then open `http://127.0.0.1:5000` in your browser, swipe to enter, and press **Scan**. Enter your own network in the box, for example `192.168.1.0/24`. You can find it with `ipconfig` (Windows) or `ip a` (Linux/macOS).
+
+**IPv4 calculator**
 
 ```bash
 python src/network_info.py
 ```
 
-On Linux/macOS, use `python3 src/network_info.py` instead.
-
 ## Example
 
-**Input:**
-
 ```text
-Enter your IPv4 address: 192.168.1.10
-Enter your subnet mask (e.g. 255.255.255.0 or /24): 255.255.255.0
+$ netsonar scan 172.20.10.0/28
+172.20.10.3 online  This computer
+172.20.10.1 online  Router (gateway)
+done 2 devices online out of 14 addresses.
 ```
 
-**Output:**
+## Responsible Use
 
-```text
-Network: 192.168.1.0
-Subnet mask: 255.255.255.0
-Broadcast: 192.168.1.255
-Usable hosts: 254
-
-Usable IP addresses (first 10):
-192.168.1.1
-192.168.1.2
-...
-192.168.1.10
-... and 244 more
-```
-**Invalid input:**
-
-```text
-Enter your IPv4 address: 192.168.1.1.10
-Enter your subnet mask (e.g. 255.255.255.0 or /24): /24
-Error: invalid IP address or subnet mask.
-```
+This project is for learning. Scan only networks you own or have permission to test. The scanner refuses public IP ranges on purpose.
 
 ## Learning Objectives
 
-This project was developed to practice:
-
-- IPv4 addressing
-- Subnet masks
+- IPv4 addressing, subnet masks and CIDR notation
 - Network and broadcast addresses
-- Usable host addresses
-- Python programming
-- Network fundamentals
+- Python functions, modules and error handling
+- Threads and subprocesses
+- Building a Flask backend and a JavaScript frontend
+- Git and GitHub workflow
 
 ## Author
 
