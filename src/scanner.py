@@ -1,7 +1,6 @@
 import ipaddress
 import platform
 import subprocess
-import sys
 from concurrent.futures import ThreadPoolExecutor
 
 
@@ -24,21 +23,24 @@ def scan_network(network):
     return [str(host) for host, alive in zip(hosts, results) if alive]
 
 
-cidr = input("Enter the network to scan (e.g. 192.168.0.0/24): ").strip()
+def scan_cidr(cidr):
+    network = ipaddress.IPv4Network(cidr.strip(), strict=False)
 
-try:
-    network = ipaddress.IPv4Network(cidr, strict=False)
-except ValueError:
-    print("Error: invalid network.")
-    sys.exit(1)
+    if not network.is_private:
+        raise ValueError("Only private networks can be scanned.")
+    if network.num_addresses > 256:
+        raise ValueError("Network too large. Use /24 or smaller.")
 
-if network.num_addresses > 256:
-    print("Network too large. Use /24 or smaller.")
-    sys.exit(1)
+    return scan_network(network)
 
-print(f"Scanning {network} ...")
-online = scan_network(network)
 
-print(f"\n{len(online)} device(s) online:")
-for ip in online:
-    print(ip)
+if __name__ == "__main__":
+    cidr = input("Enter the network to scan (e.g. 192.168.0.0/24): ")
+    try:
+        online = scan_cidr(cidr)
+    except ValueError as error:
+        print("Error:", error)
+    else:
+        print(f"\n{len(online)} device(s) online:")
+        for ip in online:
+            print(ip)
